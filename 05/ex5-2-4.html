@@ -27,13 +27,16 @@
         }
 
         $().ready(function () {
-            doSelect();
+            x = 0;
+            setInterval(doSelect, 2000);
         });
 
         async function doSelect() {
             var sql = 'select * from Tweets order by time desc limit 20';
             var objects = await osql.connect(sql);
             console.log(objects);
+            x++;
+
             var html = '';
             html = html + '<ul>';
             for (var i = 0; i < objects.length; i++) {
