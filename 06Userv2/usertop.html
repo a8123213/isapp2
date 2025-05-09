@@ -14,10 +14,20 @@
             init();
         });
 
+        function button1Pressed() {
+            userUpdate();
+        }
+
         function init() {
             var name = sessionStorage.getItem('username');
             document.getElementById('welcome').innerHTML = 'ようこそ' + name + 'さん';
         }
+
+        function userUpdate() {
+            var userid = sessionStorage.getItem('userid');
+            location.href = 'update.html?userid=' + userid;
+        }
+
     </script>
 
 </head>
@@ -26,7 +36,7 @@
     <h1>ユーザトップ</h1>
     <p id="welcome">ようこそxxさん</p>
     <hr>
+    ユーザー情報を変更する
+    <button onclick="button1Pressed()">変更</button>
 
 </body>
-
-</html>
