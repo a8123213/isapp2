@@ -15,6 +15,10 @@
             execSelect();
         });
 
+        function button1Pressed() {
+            deleteUser();
+        }
+
         async function execSelect() {
             var sql = 'select * from Users';
             var objects = await osql.connect(sql);
@@ -32,12 +36,21 @@
             html = html + '</table>';
             document.getElementById('result').innerHTML = html;
         }
+
+        function deleteUser() {
+
+        }
+
     </script>
 
 </head>
 
 <body>
     <h1>Users</h1>
+    <hr>
+    ID:<input id="inputid" value="" type="textfield">
+    <button onclick="button1Pressed">削除</button>
+    <hr>
     <p id="result">xxxx</p>
 </body>
 
