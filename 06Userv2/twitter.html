@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <script type="text/javascript" src="../lib/jquery.min.js"></script>
+    <script type="text/javascript" src="../lib/osql.js"></script>
+
+    <script>
+        osql.requireLogin();//すべてのページに入れる．google認証をして，osql.connect()や，osql.getMe()を使えるようにしてくれる．
+
+        $().ready(function () {
+            execSelect();
+        });
+
+        function button1Pressed() {
+            doInsert();
+        }
+
+        async function execSelect() {
+            var userid = sessionStorage.getItem('userid');
+            var sql = `select * from Users where id="${userid}";`;
+            var objects = await osql.connect(sql);
+
+            if (objects.length > 0) {
+                var user = objects[0];
+                document.getElementById('tf1').value = user.id;
+            }
+        }
+
+        async function doInsert() {
+            var userid = document.getElementById('tf1').value;
+            var tweet = document.getElementById('tf2').value;
+
+            var sql = `insert into Tweets (name, tweet, time) values("${userid}", "${tweet}", now());`;
+            var objects = await osql.connect(sql);
+            console.log(objects);
+
+            document.getElementById('result').innerHTML = "tweetしました";
+        }
+
+        $().ready(function () {
+            x = 0;
+            setInterval(doSelect, 2000);
+        });
+
+        async function doSelect() {
+            var sql = 'select * from Tweets order by time desc limit 20';
+            var objects = await osql.connect(sql);
+            console.log(objects);
+            x++;
+
+            var html = '';
+            html = html + '<ul>';
+            for (var i = 0; i < objects.length; i++) {
+                var object = objects[i];
+                html = html + '<li>' + object.name + ',' + object.tweet + ',' + object.time + '</li>';
+            }
+            html = html + '</ul>';
+            document.getElementById('result2').innerHTML = html;
+        }
+    </script>
+
+</head>
+
+<body>
+    <h1>Tweets</h1>
+    <br>
+    名前:<input id="tf1" type="textfield">
+    <br>
+    tweet:<input id="tf2" type="textfield">
+    <button onclick="button1Pressed()">tweet</button>
+    <br>
+    <p id="result"></p>
+    <hr>
+    <p>ツイート一覧</p>
+    <p id="result2"></p>
+</body>
+
+</html>
