@@ -37,8 +37,11 @@
             document.getElementById('result').innerHTML = html;
         }
 
-        function deleteUser() {
-
+        async function deleteUser() {
+            var inputid = document.getElementById('tf1').value;
+            var sql = `delete from Users where id="${inputid}";`;
+            await osql.connect(sql);
+            execSelect();
         }
 
     </script>
@@ -48,8 +51,8 @@
 <body>
     <h1>Users</h1>
     <hr>
-    ID:<input id="inputid" value="" type="textfield">
-    <button onclick="button1Pressed">削除</button>
+    ID:<input id="tf1" value="" type="textfield">
+    <button onclick="button1Pressed()">削除</button>
     <hr>
     <p id="result">xxxx</p>
 </body>
