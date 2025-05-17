@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <script type="text/javascript" src="../lib/jquery.min.js"></script>
+    <script type="text/javascript" src="../lib/osql.js"></script>
+
+    <script>
+        osql.requireLogin();//すべてのページに入れる．google認証をして，osql.connect()や，osql.getMe()を使えるようにしてくれる．
+        $().ready(function () {
+            init();
+        });
+
+        function button1Pressed() {
+            userUpdate();
+        }
+
+        function button2Pressed() {
+            var userid = sessionStorage.getItem('userid');
+            location.href = 'twitter.html?user=' + userid;
+        }
+
+        function init() {
+            var name = sessionStorage.getItem('username');
+            document.getElementById('welcome').innerHTML = 'ようこそ' + name + 'さん';
+        }
+
+        function userUpdate() {
+            var userid = sessionStorage.getItem('userid');
+            location.href = 'update.html?userid=' + userid;
+        }
+
+    </script>
+
+</head>
+
+<body>
+    <h1>ユーザトップ</h1>
+    <p id="welcome">ようこそxxさん</p>
+    <hr>
+    <p>ユーザー情報を変更する
+        <button onclick="button1Pressed()">変更</button>
+    </p>
+    <p>Tweetする
+        <button onclick="button2Pressed()">Twitter</button>
+    </p>
+
+</body>
