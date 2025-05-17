@@ -15,8 +15,8 @@
             execSelect();
         });
 
-        function button1Pressed() {
-            deleteUser();
+        function button1Pressed(id) {
+            deleteUser(id);
         }
 
         async function execSelect() {
@@ -31,15 +31,15 @@
                 html = html + '<td>' + object.id + '</td>';
                 html = html + '<td>' + object.name + '</td>';
                 html = html + '<td>' + '<a href="update.html?userid=' + object.id + '">変更</a>' + '</td>';
+                html = html + '<td>' + '<button onclick="button1Pressed(\'' + object.id + '\')">削除</button></td>';
                 html = html + '</tr>';
             }
             html = html + '</table>';
             document.getElementById('result').innerHTML = html;
         }
 
-        async function deleteUser() {
-            var inputid = document.getElementById('tf1').value;
-            var sql = `delete from Users where id="${inputid}";`;
+        async function deleteUser(id) {
+            var sql = `delete from Users where id="${id}";`;
             await osql.connect(sql);
             execSelect();
         }
@@ -50,9 +50,6 @@
 
 <body>
     <h1>Users</h1>
-    <hr>
-    ID:<input id="tf1" value="" type="textfield">
-    <button onclick="button1Pressed()">削除</button>
     <hr>
     <p id="result">xxxx</p>
 </body>
